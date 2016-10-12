@@ -1,0 +1,24 @@
+{
+  "version": "0.0.4",
+  "description": "calculates statistics for a streams of data",
+  "main": "./index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "cotest": "^1.5.0"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [],
+  "author": "Hugo Villeneuve",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/hville/lazy-stats.git"
+  },
+  "homepage": "https://bitbucket.org/hville/lazy-stats#readme",
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
+  "name": "@private/lazy-stats"
+}
