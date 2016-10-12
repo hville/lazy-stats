@@ -1,24 +1,28 @@
 {
-  "version": "0.0.4",
-  "description": "calculates statistics for a streams of data",
-  "main": "./index.js",
+  "name": "lazy-stats",
+  "version": "1.0.0",
+  "description": "online average, variance, covariance and correlation",
+  "keywords": [
+    "stats", "statistics",
+    "average", "variance", "covariance", "correlation"
+  ],
+  "author": "Hugo Villeneuve",
+  "main": "./lazy.js",
+  "private": false,
   "dependencies": {},
   "devDependencies": {
     "cotest": "^1.5.0"
   },
-  "scripts": {
-    "test": "node test.js"
-  },
-  "keywords": [],
-  "author": "Hugo Villeneuve",
-  "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "git+https://bitbucket.org/hville/lazy-stats.git"
+    "url": "https://github.com/hville/lazy-stats.git"
   },
-  "homepage": "https://bitbucket.org/hville/lazy-stats#readme",
+  "scripts": {
+    "test": "node test",
+    "prepublish": "npm test"
+  },
+  "license": "MIT",
   "publishConfig": {
-    "registry": "http://localhost:4873/"
-  },
-  "name": "@private/lazy-stats"
+    "registry": "https://registry.npmjs.org/"
+  }
 }
