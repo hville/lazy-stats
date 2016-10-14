@@ -13,7 +13,7 @@ var LazyStats = require('lazy-stats')
 var stat = LazyStats(3), // for 3 random variables
 
 stat.push(2,1,0)
-stat.push(1,1,1)
+stat.push([1,1,1])
 stat.push(0,1,2)
 
 var average0 = stat.ave(0)
@@ -46,6 +46,7 @@ var average0 = stat.ave(0)
 ## Methods
 
 * `.push(number0, number1, ...) => {number} sampleSize` - add sample value(s) and returns the sampe size
+* `.push([number0, number1, ...]) => {number} sampleSize` - add array of sample value(s) and returns the sampe size
 * `.average(index) => {number}` - average of a given dataset. Alias: `.ave()`
 * `.variance(index) => {number}` - variance of a given dataset. Alias: `.var()`
 * `.standardDeviation(index) => {number}` - standard deviation of a given dataset. Alias: `.std(), .stddev()`

@@ -16,7 +16,7 @@ t('single set', () => {
 t('2 dimensions...', () => {
 	var stat = L(2)
 	t('===', stat.push(1,2), 1)
-	t('===', stat.push(2,1), 2)
+	t('===', stat.push([2,1]), 2)
 	t('===', stat.ave(0), 3/2)
 	t('===', stat.ave(1), 3/2)
 	t('===', stat.var(1), 1/2)
@@ -26,7 +26,7 @@ t('2 dimensions...', () => {
 t('3 dimensions...', () => {
 	var stat = L(3)
 	t('===', stat.push(2,1,0), 1)
-	t('===', stat.push(1,1,1), 2)
+	t('===', stat.push([1,1,1]), 2)
 	t('===', stat.push(0,1,2), 3)
 	t('===', stat.ave(0), 1)
 	t('===', stat.ave(1), 1)

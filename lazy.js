@@ -47,12 +47,15 @@ function reset() {
  * @param {number} [a] - values
  * @returns {number} - number of samples
  */
-function push() {
-	if (arguments.length !== this.dim) throw Error('Expected ' + this.dim + ' argument(s)')
+function push(value) {
+	var isArray = Array.isArray(value)
+	if ((isArray ? value.length : arguments.length) !== this.dim) {
+		throw Error('Expected ' + this.dim + ' value(s)')
+	}
 	var delta = []
 	this.N++
 	for (var i=0; i<this.dim; ++i) {
-		delta[i] = (arguments[i] - this._mi[i]) / this.N
+		delta[i] = ((isArray ? value[i] : arguments[i]) - this._mi[i]) / this.N
 		this._mi[i] += delta[i]
 		for (var j=0; j<=i; ++j) {
 			this._mij[i][j] += (this.N - 1) * delta[i] * delta[j] - this._mij[i][j] / this.N
