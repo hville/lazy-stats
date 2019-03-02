@@ -10,7 +10,7 @@
 
 ```javascript
 var LazyStats = require('lazy-stats')
-var stat = LazyStats(3), // for 3 random variables
+var stat = new LazyStats(3), // for 3 random variables
 
 stat.push(2,1,0)
 stat.push([1,1,1])
@@ -34,12 +34,10 @@ var average0 = stat.ave(0)
 
 * all variables must have the same number of samples, pushed at the same time
 * no skew and kurtosis
-* currently no stops to prevent overwriting internal properties (all properties and methods are open)
-* works in node and the browser but requires a CJS module bundler for the browser (webpack, browserify, ...)
 
 ## API
 
-## Properties (all readonly. do not overwrite)
+## Properties
 
 * `.N` number: total samples received
 
@@ -47,13 +45,12 @@ var average0 = stat.ave(0)
 
 * `.push(number0, number1, ...) => {number} sampleSize` - add sample value(s) and returns the sampe size
 * `.push([number0, number1, ...]) => {number} sampleSize` - add array of sample value(s) and returns the sampe size
-* `.average(index) => {number}` - average of a given dataset. Alias: `.ave()`
-* `.variance(index) => {number}` - variance of a given dataset. Alias: `.var()`
-* `.standardDeviation(index) => {number}` - standard deviation of a given dataset. Alias: `.std(), .stddev()`
-* `.covariance(i, j) => {number}` - covariance between two datasets. Alias: `.cov()`
-* `.correlation(i, j) => {number}` - correlation between two datasets. Alias: `.cor()`
+* `.ave(index) => {number}` - average of a given dataset
+* `.var(index) => {number}` - variance of a given dataset
+* `.dev(index) => {number}` - standard deviation of a given dataset
+* `.cov(i, j) => {number}` - covariance between two datasets
+* `.cor(i, j) => {number}` - correlation between two datasets
 * `.reset() => {object} this` - clears all sums and counts back to 0
-* `.sampleSize() => {number} count` - total samples received. Alias: `.size()`
 
 # License
 
