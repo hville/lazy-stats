@@ -1,8 +1,8 @@
 /*eslint-env node, es6*/
-var t = require('cotest'),
+var ct = require('cotest'),
 		L = require('./')
 
-t('single set', () => {
+ct('single set', t => {
 	var stat = new L(1)
 	t('===', stat.push(3), 1)
 	t('===', stat.ave(), 3)
@@ -12,7 +12,7 @@ t('single set', () => {
 	t('===', stat.N, 2)
 	t('===', stat.var(), 2)
 })
-t('2 dimensions...', () => {
+ct('2 dimensions...', t => {
 	var stat = new L(2)
 	t('===', stat.push(1,2), 1)
 	t('===', stat.push([2,1]), 2)
@@ -22,7 +22,7 @@ t('2 dimensions...', () => {
 	t('===', stat.cor(0,1), -1)
 	t('===', stat.cor(0,0), 1)
 })
-t('3 dimensions...', () => {
+ct('3 dimensions...', t => {
 	var stat = new L(3)
 	t('===', stat.push(2,1,0), 1)
 	t('===', stat.push([1,1,1]), 2)
@@ -34,7 +34,7 @@ t('3 dimensions...', () => {
 	t('===', stat.cov(1,0), 0)
 	t('===', stat.cov(1,2), 0)
 })
-t('stress test', () => {
+ct('stress test', t => {
 	var stat = new L(4)
 	for (var i=1; i<1001; ++i) {
 		stat.push(i, -i, i/2, 1)

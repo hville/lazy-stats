@@ -5,10 +5,9 @@ module.exports = LazyStats
  * @param {number} [dim]
  */
 function LazyStats(dim) {
-	this.dim = dim || 1
 	this.N = 0
-	this._mi = Array(dim) // averages
-	this._mij = Array(dim) // central products: [[A'A'],[A'B',B'B''],[A'C',B'C',C'C']]
+	this._mi = Array(dim || 1) // averages
+	this._mij = Array(dim || 1) // central products: [[A'A'],[A'B',B'B''],[A'C',B'C',C'C']]
 	this.reset()
 }
 
@@ -16,12 +15,11 @@ function LazyStats(dim) {
  * @return {LazyStats}
  */
 LazyStats.prototype.reset = function() {
-	for (var i=0; i < this.dim; ++i) {
+	var mij = this._mij
+	for (var i=0; i < mij.length; ++i) {
 		this._mi[i] = 0
-		this._mij[i] = []
-		for (var j=0; j <= i; ++j) {
-			this._mij[i][j] = 0
-		}
+		mij[i] = []
+		for (var j=0; j <= i; ++j) mij[i][j] = 0
 	}
 	return this
 }
@@ -33,17 +31,16 @@ LazyStats.prototype.reset = function() {
  * @returns {number} - number of samples
  */
 LazyStats.prototype.push = function(values) {
-	var args = Array.isArray(values) ? values : arguments
-	if (args.length !== this.dim) throw Error(`Expected ${this.dim} value(s)`)
+	var args = Array.isArray(values) ? values : arguments,
+			delta = [],
+			mij = this._mij
 
-	var delta = []
+	if (args.length !== mij.length) throw Error(`Expected ${this.dim} value(s)`)
 	this.N++
-	for (var i=0; i<this.dim; ++i) {
+	for (var i=0; i<mij.length; ++i) {
 		delta[i] = (args[i] - this._mi[i]) / this.N
 		this._mi[i] += delta[i]
-		for (var j=0; j<=i; ++j) {
-			this._mij[i][j] += (this.N - 1) * delta[i] * delta[j] - this._mij[i][j] / this.N
-		}
+		for (var j=0; j<=i; ++j) mij[i][j] += (this.N - 1) * delta[i] * delta[j] - mij[i][j] / this.N
 	}
 	return this.N
 }
@@ -73,7 +70,8 @@ LazyStats.prototype.cov = function(a, b) {
  * @return {number}
  */
 LazyStats.prototype.var = function(a) {
-	return this.cov(a || 0, a || 0)
+	if (this.N < 2) return NaN
+	return this.N / (this.N - 1) * this._mij[a || 0][a || 0]
 }
 
 /**
@@ -83,7 +81,7 @@ LazyStats.prototype.var = function(a) {
  * @return {number}
  */
 LazyStats.prototype.dev = function(a) {
-	return Math.sqrt(this.cov(a || 0, a || 0))
+	return Math.sqrt(this.var(a))
 }
 
 /**

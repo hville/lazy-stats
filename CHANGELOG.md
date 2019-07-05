@@ -11,6 +11,7 @@
 ## [3.0.0] - Unreleased
 ### Removed
 - Aliases
+- `.dim`
 
 ## [2.0.0] - 2017-12-05
 ### Added
