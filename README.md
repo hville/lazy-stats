@@ -9,18 +9,18 @@
 ## Example
 
 ```javascript
-var LazyStats = require('lazy-stats')
-var stat = new LazyStats(3), // for 3 random variables
+import LazyStats from 'lazy-stats'
+const stat = new LazyStats(3), // for 3 random variables
 
 stat.push(2,1,0)
 stat.push([1,1,1])
 stat.push(0,1,2)
 
-var average0 = stat.ave(0)
-    average1 = stat.ave(1)
-    variance2 = stat.var(2)
-    covariance12 = stat.cov(1,2)
-    correlation20 = stat.cor(2,0)
+const average0 = stat.ave(0),
+      average1 = stat.ave(1),
+      variance2 = stat.var(2),
+      covariance12 = stat.cov(1,2),
+      correlation20 = stat.cor(2,0)
 ```
 
 ## Features

@@ -1,6 +1,9 @@
 {
   "name": "lazy-stats",
-  "version": "2.0.1",
+  "version": "3.1.0",
+  "type": "module",
+  "main": "index.js",
+  "browser": "index.js",
   "description": "online average, variance, covariance and correlation",
   "keywords": [
     "stats",
@@ -11,10 +14,9 @@
     "correlation"
   ],
   "author": "Hugo Villeneuve",
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^8.0.55",
-    "cotest": "^3.0.0"
+    "assert-op": "^0.1.0"
   },
   "repository": {
     "type": "git",
