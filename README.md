@@ -48,8 +48,10 @@ const average0 = stat.ave(0),
 * `.ave(index) => {number}` - average of a given dataset
 * `.var(index) => {number}` - variance of a given dataset
 * `.dev(index) => {number}` - standard deviation of a given dataset
-* `.cov(i, j) => {number}` - covariance between two datasets
-* `.cor(i, j) => {number}` - correlation between two datasets
+* `.cov(j, i) => {number}` - covariance between two datasets
+* `.cor(j, i) => {number}` - correlation between two datasets
+* `.slope(j, i) => {number}` - slope for `y=set[j]` and `x=set[i]`
+* `.intercept(j, i) => {number}` - intercept for `y=set[j]` and `x=set[i]`
 * `.reset() => {object} this` - clears all sums and counts back to 0
 
 # License

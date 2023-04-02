@@ -50,3 +50,32 @@ t('stress test', a => {
 
 	a('===', stat.cov(2,3), 0)
 })
+t('transfer', a => {
+	const src = new L(4)
+	for (var i=1; i<1001; ++i) {
+		src.push(i, -i, i/2, 1)
+	}
+	const stat = new L(src.data)
+	a('===', stat.N, src.N)
+	a('===', stat.M, src.M)
+	a('===', stat.ave(0), 1001/2)
+	a('===', stat.ave(1), -1001/2)
+	a('===', stat.ave(2), 1001/4)
+	a('===', stat.ave(3), 1)
+
+	a('===', stat.cor(0,0), 1)
+	a('===', stat.cor(1,0), -1)
+	a('===', stat.cor(1,2), -1)
+
+	a('===', stat.cov(2,3), 0)
+	src.reset()
+	a('===', src.N, 0)
+	a('===', stat.N, 0)
+})
+t('slope and intercept', a => {
+	const stat = new L(2),
+				y = x=> 2*x + 3
+	for (let x=-10; x<10; ++x) stat.push( y(x) , x)
+	a('===', stat.slope(0,1), 2)
+	a('===', stat.intercept(0,1), 3)
+})
