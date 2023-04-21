@@ -40,6 +40,7 @@ const average0 = stat.ave(0),
 ## Properties
 
 * `.N` number: total samples received
+* `.data` Float64Array: transferable memory `copy = new LazyStats( main.data )`
 
 ## Methods
 

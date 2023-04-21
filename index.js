@@ -1,39 +1,19 @@
-	/**
-		Object.defineProperties(this, {
-			vs: {value: new Float64Array(buffer, offset, length)},
-			rs: {value: new Float64Array(buffer, offset + byteLn, length)}
-
-
-			sample dist: 2x8byte array === 16bytes per sample : bytelength = M*16 == M<<4
-			lazy stat (M+1)(M+2)/2 = (M**2 + 3M + 2)/2 = M(M+3)/2 + 1
-
-			NN+N+0.25=(N+0.5)^2=2S+0.25
-			(2N+1)^2=8S+1
-			2N+1 = sqrt(8S+1)
-			N = (sqrt(8S+1)-1)/2 = M+1
-			M = (sqrt(8S+1)-3)/2
-					// need M(M+1)/2 + (M+1) values = (M+1)(M+2)/2 = ((2M + 3)^2 - 1)/8
-		// example: 3 dimension needs (3+1)(3+2)/2= 10 values [0][12][345][678][9]; 80 bytes
-		//
-
-	 */
-
-
 export default class LazyStats{
 	/**
-	 * @param {Float64Array|DataView|ArrayBuffer|number} [memory] number of random variables
+	 * @param {Float64Array|number} [memory] number of random variables
 	 */
-	constructor(memory=1) {
-		const buffer = memory.buffer || (memory.byteLength ? M : new ArrayBuffer( 4 * (memory+1)*(memory+2) ))
-		let offset = memory.byteOffset || 0
-		this.M = Math.floor( ( Math.sqrt( (memory.byteLength || buffer.byteLength) + 1 ) - 3 ) / 2 ) //in case of oversized buffer
+	constructor(size=1) {
+		this.M = size.buffer ? Math.floor( ( Math.sqrt( size.byteLength + 1 ) - 3 ) / 2 ) : size
+		const N = (this.M + 1)*(this.M + 2)/2
+		const memory = size.buffer ? new Float64Array(size.buffer, size.offset, N) : new Float64Array(N)
+
 		Object.defineProperties(this, {
-			_mi: { value: new Float64Array(buffer, offset, (this.M + 1)*(this.M + 2)/2 ) }, // averages, ...fullMemory
+			_mi: { value: memory }, // averages, ...fullMemory
 			_mij: { value: Array(this.M) }, // M(M+1)/2 central products: [[A'A'],[A'B',B'B''],[A'C',B'C',C'C']]
 		})
-		offset += 8 * this.M // 8 bytes per value
+		let offset = memory.byteOffset + memory.BYTES_PER_ELEMENT * this.M // after averages
 		for (let i=0; i < this.M; ++i) {
-			this._mij[i] = new Float64Array(buffer, offset, i+1)
+			this._mij[i] = new Float64Array(memory.buffer, offset, i+1)
 			offset += this._mij[i].byteLength
 		}
 	}
