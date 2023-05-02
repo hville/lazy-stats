@@ -1,3 +1,5 @@
+import byteView from '@hugov/byte-views'
+
 export default class LazyStats{
 	/**
 	 * @param {Float64Array|number} [memory] number of random variables
@@ -11,11 +13,9 @@ export default class LazyStats{
 			_mi: { value: memory }, // averages, ...fullMemory
 			_mij: { value: Array(this.M) }, // M(M+1)/2 central products: [[A'A'],[A'B',B'B''],[A'C',B'C',C'C']]
 		})
-		let offset = memory.byteOffset + memory.BYTES_PER_ELEMENT * this.M // after averages
-		for (let i=0; i < this.M; ++i) {
-			this._mij[i] = new Float64Array(memory.buffer, offset, i+1)
-			offset += this._mij[i].byteLength
-		}
+		this._mij[0] = new Float64Array(memory.buffer, memory.byteOffset + memory.BYTES_PER_ELEMENT * this.M, 1)
+		for (let i=1; i < this.M; ++i)
+			this._mij[i] = byteView(this._mij[i-1], Float64Array, i+1)
 	}
 
 	get N() { return this._mi[this._mi.length-1] } //last byte in memory
